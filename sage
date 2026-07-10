@@ -1,0 +1,15 @@
+[33mebdd4a4[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m Update scheduler default email recipient
+[33m7f7d5d0[m Feat: Add User Accounts and Social Layer
+[33m85d08dd[m Add scheduler.py to .gitignore
+[33mf50bbe9[m Remove scheduler.py
+[33m0cfc010[m Fix scheduler emoji encoding for Windows console
+[33meae2e30[m Redesign topic headers to improve readability
+[33m8fa5825[m Refactor roadmapData to include curriculumId for unique React keys
+[33mb62395a[m Update favicon again
+[33m0f6daf5[m Use user's new favicon
+[33m9c002b5[m Update favicon with user's new image
+[33m364d61f[m Add sleek favicon
+[33m20b5d69[m Include compiled React frontend for deployment
+[33mc1502b9[m Refactor roadmap to 4-week interview curriculum
+[33maa0e331[m Update README.md
+[33m585dae8[m Initial commit
