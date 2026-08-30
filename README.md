@@ -1,4 +1,4 @@
-# 🧠 Code Review Tracker — Spaced Repetition
+# Code Review Tracker — Spaced Repetition
 
 A lightweight, full-stack web app to track and revise coding problems using **spaced repetition** scheduling. Built with Python (Flask), SQLite, and vanilla HTML/CSS/JS.
 
