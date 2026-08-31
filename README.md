@@ -1,10 +1,10 @@
-# 🧠 DSA Revision Tracker — Spaced Repetition
+# DSA Revision Tracker — Spaced Repetition
 
 A full-stack web application designed to track and revise coding problems using **spaced repetition** scheduling. The application features a clean, professional React (Vite) frontend with a Python (Flask) REST API and SQLite database.
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```text
 coding-tracker/
@@ -32,7 +32,7 @@ coding-tracker/
 
 ---
 
-## 🚀 How to Run Locally
+## How to Run Locally
 
 ### 1. Start the Flask Backend
 Open a terminal in the root directory:
@@ -68,7 +68,7 @@ npm run dev
 
 ---
 
-## ⚙️ How Scheduling Works
+## How Scheduling Works
 
 When you add or revise a problem, you rate your confidence from **1 to 5**. The app calculates the next review date:
 
@@ -84,7 +84,7 @@ This logic lives in **`utils.py → calculate_next_review(confidence)`**.
 
 ---
 
-## 🔌 Core Features
+## Core Features
 
 *   **Spaced Repetition Tracker:** Log problems and automatically schedule them for future review based on your confidence score.
 *   **Analytics Dashboard:** Visualizes your study streak, identifies weak topics, and charts problems solved over time.
@@ -94,7 +94,7 @@ This logic lives in **`utils.py → calculate_next_review(confidence)`**.
 
 ---
 
-## 🗃️ Database Schema
+## Database Schema
 
 The database uses SQLite with the following primary tables:
 
@@ -104,7 +104,7 @@ The database uses SQLite with the following primary tables:
 
 ---
 
-## 📧 Email Reminders (Optional)
+## Email Reminders (Optional)
 
 `scheduler.py` fetches today's due problems and sends a summary email via SMTP.
 
