@@ -5,25 +5,32 @@ import {
 } from "recharts";
 import StatCard      from "../components/StatCard";
 import LoadingSpinner from "../components/LoadingSpinner";
-import EmptyState    from "../components/EmptyState";
+import EmptyState from "../components/EmptyState";
 import {
   getSummary, getStreak, getProblemsOverTime, getWeakTopics,
 } from "../services/api";
+
+// ── Icons ─────────────────────────────────────────────────────────────────────
+const BookIcon = () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path></svg>;
+const CheckCircleIcon = () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>;
+const FlameIcon = () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"></path></svg>;
+const StarIcon = () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>;
 
 // ── Custom Recharts tooltip ───────────────────────────────────────────────────
 function DarkTooltip({ active, payload, label, valueLabel }) {
   if (!active || !payload?.length) return null;
   return (
     <div style={{
-      background: "#1a1d27",
-      border: "1px solid rgba(124,109,250,.35)",
-      borderRadius: 8,
-      padding: "8px 14px",
-      fontSize: ".82rem",
-      color: "#e2e8f0",
+      background: "var(--surface)",
+      border: "1px solid var(--border)",
+      borderRadius: "var(--radius-sm)",
+      padding: "8px 12px",
+      fontSize: "12px",
+      color: "var(--text)",
+      boxShadow: "var(--shadow-md)"
     }}>
-      <p style={{ color: "#94a3b8", marginBottom: 3 }}>{label}</p>
-      <p><strong style={{ color: "#7c6dfa" }}>{payload[0].value}</strong> {valueLabel}</p>
+      <p style={{ color: "var(--text-subtle)", marginBottom: 4 }}>{label}</p>
+      <p><strong style={{ color: "var(--text)", fontWeight: 600 }}>{payload[0].value}</strong> {valueLabel}</p>
     </div>
   );
 }
@@ -37,9 +44,9 @@ function barColour(conf) {
 
 // ── Streak helper message ─────────────────────────────────────────────────────
 function streakMsg(cur, best) {
-  if (cur === 0)       return ["No active streak", "Solve a problem today to start one! 🚀"];
-  if (cur >= best && best > 1) return ["Personal best! 🏆", `${cur} days straight`];
-  if (cur >= 7)        return ["On fire! 🔥", `${best - cur} days to best`];
+  if (cur === 0)       return ["No active streak", "Solve a problem today to start one."];
+  if (cur >= best && best > 1) return ["Personal best", `${cur} days straight`];
+  if (cur >= 7)        return ["On fire", `${best - cur} days to best`];
   return [`${cur}-day streak`, `Best: ${best} days`];
 }
 
@@ -107,61 +114,60 @@ export default function DashboardPage() {
       </div>
 
       {/* ── Summary cards ────────────────────────────── */}
-      <p className="section-label">📋 Overview</p>
-      <div className="stats-grid" style={{ marginBottom: 24 }}>
-        <StatCard icon="📚" label="Total Problems" value={summary?.total_problems} />
-        <StatCard icon="✅" label="Active"          value={summary?.active}         accent="green" />
-        <StatCard icon="🔥" label="Due Today"       value={summary?.due_today}      accent="yellow" />
-        <StatCard icon="⭐" label="Avg Confidence"  value={summary?.avg_confidence?.toFixed(1)} />
+      <p className="section-label">Overview</p>
+      <div style={{ display: "flex", flexWrap: "wrap", border: "1px solid var(--border)", borderRadius: "var(--radius-md)", background: "var(--surface)", marginBottom: "var(--space-6)", overflow: "hidden" }}>
+        <StatCard icon={<BookIcon />} label="Total Problems" value={summary?.total_problems} />
+        <StatCard icon={<CheckCircleIcon />} label="Active"          value={summary?.active}         accent="green" />
+        <StatCard icon={<FlameIcon />} label="Due Today"       value={summary?.due_today}      accent="yellow" />
+        <StatCard icon={<StarIcon />} label="Avg Confidence"  value={summary?.avg_confidence?.toFixed(1)} isLast />
       </div>
 
       {/* ── Streak banner ────────────────────────────── */}
-      <p className="section-label">🔥 Streak</p>
+      <p className="section-label">Consistency</p>
       <div style={{
-        background: "linear-gradient(135deg,rgba(124,109,250,.12),rgba(52,211,153,.07))",
-        border: "1px solid rgba(124,109,250,.28)",
-        borderRadius: "var(--radius)",
-        padding: "22px 24px",
+        background: "var(--surface)",
+        border: "1px solid var(--border)",
+        borderRadius: "var(--radius-md)",
+        padding: "var(--space-6)",
         display: "flex",
         alignItems: "center",
-        gap: 24,
-        marginBottom: 24,
+        gap: "var(--space-6)",
+        marginBottom: "var(--space-6)",
         flexWrap: "wrap",
       }}>
-        <span style={{
-          fontSize: "2.8rem",
-          filter: streak?.current_streak > 0 ? "drop-shadow(0 0 10px rgba(251,191,36,.5))" : "grayscale(1) opacity(.35)",
-        }}>🔥</span>
+        <div style={{ color: streak?.current_streak > 0 ? "var(--yellow)" : "var(--text-subtle)", opacity: streak?.current_streak > 0 ? 1 : 0.5 }}>
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"></path></svg>
+        </div>
 
-        <div style={{ display: "flex", gap: 32, flex: 1, flexWrap: "wrap" }}>
+        <div style={{ display: "flex", gap: "var(--space-8)", flex: 1, flexWrap: "wrap" }}>
           {[
-            { val: streak?.current_streak, lbl: "Current Streak", clr: "#fbbf24" },
-            { val: streak?.longest_streak, lbl: "Longest Streak",  clr: "#7c6dfa" },
-            { val: streak?.total_active_days, lbl: "Days Active",  clr: "#34d399" },
-          ].map(({ val, lbl, clr }) => (
+            { val: streak?.current_streak, lbl: "Current Streak" },
+            { val: streak?.longest_streak, lbl: "Longest Streak" },
+            { val: streak?.total_active_days, lbl: "Days Active" },
+          ].map(({ val, lbl }) => (
             <div key={lbl}>
-              <div style={{ fontSize: "2.2rem", fontWeight: 800, lineHeight: 1, color: clr, textShadow: `0 0 18px ${clr}55` }}>{val ?? "—"}</div>
-              <div style={{ fontSize: ".72rem", textTransform: "uppercase", letterSpacing: ".06em", color: "var(--text-muted)", marginTop: 4 }}>{lbl}</div>
+              <div style={{ fontSize: "28px", fontWeight: 600, lineHeight: 1, color: "var(--text)" }}>{val ?? "—"}</div>
+              <div style={{ fontSize: "12px", color: "var(--text-muted)", marginTop: "8px", fontWeight: 500 }}>{lbl}</div>
             </div>
           ))}
         </div>
 
         <div style={{
-          background: "rgba(251,191,36,.1)",
-          border: "1px solid rgba(251,191,36,.22)",
+          background: "var(--surface-raised)",
+          border: "1px solid var(--border)",
           borderRadius: "var(--radius-sm)",
-          padding: "10px 18px",
+          padding: "var(--space-2) var(--space-4)",
           textAlign: "center",
           flexShrink: 0,
         }}>
-          <div style={{ fontWeight: 700, color: "var(--yellow)", fontSize: ".95rem" }}>{smsg}</div>
-          <div style={{ fontSize: ".72rem", color: "var(--text-muted)", marginTop: 2 }}>{ssub}</div>
+          <div style={{ fontWeight: 600, color: "var(--text)", fontSize: "14px" }}>{smsg}</div>
+          <div style={{ fontSize: "12px", color: "var(--text-muted)", marginTop: "2px" }}>{ssub}</div>
         </div>
       </div>
 
       {/* ── Charts row ───────────────────────────────── */}
-      <p className="section-label">📈 Activity</p>
-      <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr", gap: 20, marginBottom: 24 }}>
+      <p className="section-label">Activity</p>
+      <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr", gap: "var(--space-6)", marginBottom: "var(--space-6)" }} className="charts-responsive">
 
         {/* Line chart — problems over time */}
         <div className="card" style={{ minWidth: 0 }}>
@@ -170,22 +176,22 @@ export default function DashboardPage() {
             <div style={{ fontSize: ".74rem", color: "var(--text-muted)", marginTop: 2 }}>Last 30 days</div>
           </div>
           {overTime.every((d) => d.count === 0) ? (
-            <EmptyState icon="📈" title="No data yet" message="Start adding problems to see trends." />
+            <EmptyState title="No data yet" message="Start adding problems to see trends." />
           ) : (
             <ResponsiveContainer width="100%" height={220}>
               <LineChart data={overTime} margin={{ top: 4, right: 4, left: -20, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,.06)" />
+                <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
                 <XAxis
                   dataKey="date"
                   tickFormatter={fmtDate}
-                  tick={{ fontSize: 11, fill: "#94a3b8" }}
+                  tick={{ fontSize: 11, fill: "var(--text-muted)" }}
                   tickLine={false}
                   axisLine={false}
                   interval={4}
                 />
                 <YAxis
                   allowDecimals={false}
-                  tick={{ fontSize: 11, fill: "#94a3b8" }}
+                  tick={{ fontSize: 11, fill: "var(--text-muted)" }}
                   tickLine={false}
                   axisLine={false}
                 />
@@ -193,13 +199,13 @@ export default function DashboardPage() {
                 <Line
                   type="monotone"
                   dataKey="count"
-                  stroke="#7c6dfa"
+                  stroke="var(--accent)"
                   strokeWidth={2.5}
                   dot={(props) => props.payload.count > 0
-                    ? <circle key={props.key} cx={props.cx} cy={props.cy} r={4} fill="#7c6dfa" stroke="none" />
+                    ? <circle key={props.key} cx={props.cx} cy={props.cy} r={4} fill="var(--accent)" stroke="none" />
                     : <g key={props.key} />
                   }
-                  activeDot={{ r: 6, fill: "#7c6dfa", stroke: "none" }}
+                  activeDot={{ r: 6, fill: "var(--accent)", stroke: "none" }}
                 />
               </LineChart>
             </ResponsiveContainer>
@@ -215,7 +221,7 @@ export default function DashboardPage() {
             </div>
           </div>
           {weakTopics.length === 0 ? (
-            <EmptyState icon="🧩" title="No topic data" message="Add problems with topics to see analysis." />
+            <EmptyState title="No topic data" message="Add problems with topics to see analysis." />
           ) : (
             <>
               <ResponsiveContainer width="100%" height={180}>
@@ -224,11 +230,11 @@ export default function DashboardPage() {
                   layout="vertical"
                   margin={{ top: 0, right: 8, left: 0, bottom: 0 }}
                 >
-                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,.06)" horizontal={false} />
+                  <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" horizontal={false} />
                   <XAxis
                     type="number"
                     domain={[0, 5]}
-                    tick={{ fontSize: 11, fill: "#94a3b8" }}
+                    tick={{ fontSize: 11, fill: "var(--text-muted)" }}
                     tickLine={false}
                     axisLine={false}
                   />
@@ -236,7 +242,7 @@ export default function DashboardPage() {
                     type="category"
                     dataKey="topic"
                     width={90}
-                    tick={{ fontSize: 11, fill: "#e2e8f0" }}
+                    tick={{ fontSize: 11, fill: "var(--text)" }}
                     tickLine={false}
                     axisLine={false}
                   />
@@ -245,10 +251,10 @@ export default function DashboardPage() {
                       if (!active || !payload?.length) return null;
                       const d = payload[0].payload;
                       return (
-                        <div style={{ background: "#1a1d27", border: "1px solid rgba(255,255,255,.1)", borderRadius: 8, padding: "8px 14px", fontSize: ".8rem" }}>
-                          <p style={{ fontWeight: 600, color: "#e2e8f0" }}>{d.topic}</p>
-                          <p style={{ color: "#94a3b8" }}>Avg confidence: <strong>{d.avg_confidence}</strong>/5</p>
-                          <p style={{ color: "#94a3b8" }}>Problems: {d.problem_count}</p>
+                        <div style={{ background: "var(--surface)", border: "1px solid var(--border)", borderRadius: "var(--radius-sm)", padding: "8px 12px", fontSize: "12px", boxShadow: "var(--shadow-md)" }}>
+                          <p style={{ fontWeight: 600, color: "var(--text)", marginBottom: 4 }}>{d.topic}</p>
+                          <p style={{ color: "var(--text-muted)" }}>Avg confidence: <strong style={{color:"var(--text)"}}>{d.avg_confidence}</strong>/5</p>
+                          <p style={{ color: "var(--text-muted)" }}>Problems: {d.problem_count}</p>
                         </div>
                       );
                     }}

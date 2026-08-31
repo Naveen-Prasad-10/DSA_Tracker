@@ -1,29 +1,40 @@
 /* ProblemCard.css */
 .pcard {
-  background: var(--surface-2);
+  background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: 14px 16px;
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  transition: border-color var(--tr), transform var(--tr);
+  gap: var(--space-3);
+  transition: border-color var(--transition), background var(--transition);
 }
-.pcard:hover { border-color: rgba(124,109,250,.3); transform: translateX(2px); }
-.pcard--done { opacity: .52; }
-.pcard--done .pcard-title { text-decoration: line-through; color: var(--text-muted); }
+.pcard:hover { 
+  border-color: var(--border-strong); 
+  background: var(--surface-hover);
+}
+.pcard--done { 
+  opacity: 0.7; 
+  background: transparent;
+}
+.pcard--done .pcard-title { 
+  color: var(--text-muted); 
+}
+.pcard--done .pcard-dot {
+  opacity: 0.5;
+}
 
 /* Row: dot + info / actions */
 .pcard-left {
   display: flex;
   align-items: flex-start;
-  gap: 10px;
+  gap: var(--space-3);
   flex: 1;
 }
 .pcard-actions {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: var(--space-2);
   flex-shrink: 0;
   align-self: flex-start;
 }
@@ -41,30 +52,32 @@
   flex-shrink: 0;
   margin-top: 6px;
 }
-.pcard-dot--red    { background: var(--red);    box-shadow: 0 0 6px var(--red); }
-.pcard-dot--yellow { background: var(--yellow); box-shadow: 0 0 6px var(--yellow); }
-.pcard-dot--green  { background: var(--green);  box-shadow: 0 0 6px var(--green); }
+.pcard-dot--red    { background: var(--red); }
+.pcard-dot--yellow { background: var(--yellow); }
+.pcard-dot--green  { background: var(--green); }
 
 /* Info block */
 .pcard-info  { flex: 1; min-width: 0; }
-.pcard-title { font-size: .92rem; font-weight: 600; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.pcard-meta  { display: flex; align-items: center; gap: 8px; margin-top: 5px; flex-wrap: wrap; }
-.pcard-topic { font-size: .74rem; color: var(--text-muted); }
-.pcard-date  { font-size: .72rem; color: var(--text-muted); }
-.pcard-conf  { font-size: .72rem; color: var(--text-muted); }
+.pcard-title { font-size: 15px; font-weight: 500; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pcard-meta  { display: flex; align-items: center; gap: var(--space-3); margin-top: var(--space-2); flex-wrap: wrap; }
+.pcard-topic { font-size: 12px; color: var(--text-subtle); }
+.pcard-date  { font-size: 12px; color: var(--text-subtle); display: flex; align-items: center; gap: 4px; }
+.pcard-conf  { font-size: 12px; color: var(--text-subtle); display: flex; align-items: center; gap: 4px; }
 
 /* Inline revise panel */
 .pcard-revise {
-  background: var(--surface);
+  background: var(--surface-raised);
   border-top: 1px solid var(--border);
-  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
-  padding: 12px;
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+  padding: var(--space-4);
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: var(--space-3);
+  margin: calc(var(--space-4) * -1);
+  margin-top: 0;
 }
 .pcard-revise-label {
-  font-size: .78rem;
+  font-size: 13px;
   color: var(--text-muted);
   font-weight: 500;
 }

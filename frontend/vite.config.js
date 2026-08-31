@@ -10,6 +10,10 @@ export default defineConfig({
     proxy: {
       "/problems":  { target: "http://localhost:5000", changeOrigin: true },
       "/analytics": { target: "http://localhost:5000", changeOrigin: true },
+      "/auth":      { target: "http://localhost:5000", changeOrigin: true },
+      "/roadmap":   { target: "http://localhost:5000", changeOrigin: true },
+      "/social":    { target: "http://localhost:5000", changeOrigin: true },
     },
   },
 });
+

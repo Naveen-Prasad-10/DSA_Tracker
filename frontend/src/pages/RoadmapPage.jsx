@@ -90,9 +90,9 @@ export default function RoadmapPage() {
         date_solved: new Date().toISOString().slice(0, 10),
         confidence: 3
       });
-      alert(`✅ "${problem.name}" added to reminders`);
+      alert(`"${problem.name}" added to reminders`);
     } catch (err) {
-      alert("❌ Failed to add problem");
+      alert("Failed to add problem");
     }
   };
 
@@ -201,7 +201,7 @@ export default function RoadmapPage() {
               </div>
             </>
           ) : (
-            <div className="focus-title">All Topics Completed! 🎉</div>
+            <div className="focus-title">All Topics Completed</div>
           )}
         </div>
         <div className="focus-card">
@@ -254,7 +254,11 @@ export default function RoadmapPage() {
           
           return (
             <div key={week.week} className={`week-card ${isOpen ? "open" : ""}`}>
-              <div className="week-header" onClick={() => toggleWeek(week.week)}>
+              <button 
+                className="week-header" 
+                onClick={() => toggleWeek(week.week)}
+                aria-expanded={isOpen}
+              >
                 <div className="week-header-left">
                   <span className="week-badge">Week {week.week}</span>
                 </div>
@@ -267,7 +271,7 @@ export default function RoadmapPage() {
                   </div>
                   <span className="chevron"></span>
                 </div>
-              </div>
+              </button>
 
               {isOpen && (
                 <div className="week-body">

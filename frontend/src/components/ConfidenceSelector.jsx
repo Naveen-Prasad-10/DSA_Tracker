@@ -10,7 +10,7 @@ export default function ConfidenceSelector({ value, onChange, disabled }) {
   const labels = { 1: "Forgot", 2: "Hard", 3: "OK", 4: "Good", 5: "Easy" };
 
   return (
-    <div style={{ display: "flex", gap: 7, flexWrap: "wrap" }}>
+    <div style={{ display: "flex", gap: "8px", flexWrap: "wrap", width: "100%" }}>
       {[1, 2, 3, 4, 5].map((n) => (
         <button
           key={n}
@@ -20,20 +20,22 @@ export default function ConfidenceSelector({ value, onChange, disabled }) {
           title={labels[n]}
           style={{
             flex: 1,
-            minWidth: 40,
-            padding: "9px 4px",
+            minWidth: "50px",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: "8px 4px",
             borderRadius: "var(--radius-sm)",
             border: `1px solid ${value === n ? "var(--accent)" : "var(--border)"}`,
-            background: value === n ? "var(--accent)" : "var(--surface-2)",
-            color: value === n ? "#fff" : "var(--text-muted)",
-            fontWeight: 700,
-            fontSize: ".9rem",
+            background: value === n ? "var(--accent-soft)" : "var(--surface-raised)",
+            color: value === n ? "var(--accent)" : "var(--text-muted)",
             cursor: disabled ? "not-allowed" : "pointer",
-            transition: "all var(--tr)",
-            boxShadow: value === n ? "0 0 12px var(--accent-glow)" : "none",
+            transition: "all var(--transition)",
           }}
         >
-          {n}
+          <span style={{ fontWeight: 600, fontSize: "16px", lineHeight: 1.2, color: value === n ? "var(--text)" : "inherit" }}>{n}</span>
+          <span style={{ fontSize: "11px", marginTop: "2px" }}>{labels[n]}</span>
         </button>
       ))}
     </div>

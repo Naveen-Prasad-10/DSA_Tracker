@@ -70,27 +70,30 @@ export default function HomePage() {
     <div className="page" style={{ maxWidth: 560 }}>
 
       {/* ── Header ──────────────────────────────────────── */}
-      <div style={{ marginBottom: 28 }}>
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, flexWrap: "wrap" }}>
+      <div style={{ marginBottom: "var(--space-6)" }}>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "var(--space-3)", flexWrap: "wrap" }}>
           <div>
-            <h2 style={{ fontWeight: 700, fontSize: "1.3rem" }}>Add Problem</h2>
-            <p style={{ color: "var(--text-muted)", fontSize: ".84rem", marginTop: 3 }}>
+            <h2 className="text-xl font-bold">Add Problem</h2>
+            <p className="text-sm text-muted mt-2">
               Log a solved problem and schedule your next review.
             </p>
           </div>
           {dueCount !== null && (
             <div style={{
-              background: dueCount > 0 ? "rgba(251,191,36,.12)" : "var(--surface-2)",
-              border: `1px solid ${dueCount > 0 ? "rgba(251,191,36,.3)" : "var(--border)"}`,
-              borderRadius: 10,
+              background: dueCount > 0 ? "rgba(245,158,11,0.1)" : "var(--surface-raised)",
+              border: `1px solid ${dueCount > 0 ? "rgba(245,158,11,0.2)" : "var(--border)"}`,
+              borderRadius: "var(--radius-md)",
               padding: "8px 16px",
               textAlign: "center",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center"
             }}>
-              <div style={{ fontSize: "1.4rem", fontWeight: 800, color: dueCount > 0 ? "var(--yellow)" : "var(--accent)" }}>
+              <div style={{ fontSize: "20px", fontWeight: 600, color: dueCount > 0 ? "var(--yellow)" : "var(--text)" }}>
                 {dueCount}
               </div>
-              <div style={{ fontSize: ".66rem", textTransform: "uppercase", letterSpacing: ".06em", color: "var(--text-muted)" }}>
-                Due Today
+              <div style={{ fontSize: "12px", color: "var(--text-subtle)", marginTop: "2px" }}>
+                Due today
               </div>
             </div>
           )}
@@ -184,17 +187,19 @@ export default function HomePage() {
 
           {/* Schedule preview */}
           <div style={{
-            fontSize: ".8rem",
+            fontSize: "14px",
             color: "var(--text-muted)",
-            padding: "7px 12px",
-            background: "var(--surface-2)",
+            padding: "8px 12px",
+            background: "var(--surface-raised)",
             borderRadius: "var(--radius-sm)",
             borderLeft: "3px solid var(--accent)",
-            marginBottom: 18,
+            marginBottom: "var(--space-4)",
+            display: "flex",
+            alignItems: "center",
+            gap: "8px"
           }}>
-            📅 Next review in <strong style={{ color: "var(--accent)" }}>
-              {previewDays} {previewDays === 1 ? "day" : "days"}
-            </strong>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{color: "var(--text-subtle)"}}><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+            <span>Next review in <strong style={{ color: "var(--text)", fontWeight: 500 }}>{previewDays} {previewDays === 1 ? "day" : "days"}</strong></span>
           </div>
 
           <button type="submit" className="btn btn-primary" disabled={loading}>

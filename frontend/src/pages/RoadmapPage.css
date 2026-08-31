@@ -28,10 +28,10 @@
 .overall-stats-card {
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: var(--radius);
+  border-radius: var(--radius-md);
   padding: 16px 20px;
   min-width: 260px;
-  box-shadow: var(--shadow);
+  box-shadow: var(--shadow-sm);
 }
 
 .overall-stats-labels {
@@ -48,7 +48,7 @@
 .overall-bar-wrap {
   width: 100%;
   height: 8px;
-  background: var(--surface-2);
+  background: var(--border);
   border-radius: 4px;
   overflow: hidden;
   margin-bottom: 6px;
@@ -71,9 +71,9 @@
 .rules-banner {
   display: flex;
   gap: 16px;
-  background: linear-gradient(135deg, rgba(124, 109, 250, 0.1), rgba(52, 211, 153, 0.05));
-  border: 1px solid rgba(124, 109, 250, 0.2);
-  border-radius: var(--radius);
+  background: linear-gradient(135deg, rgba(22, 131, 199, 0.1), rgba(52, 211, 153, 0.05));
+  border: 1px solid rgba(22, 131, 199, 0.2);
+  border-radius: var(--radius-md);
   padding: 14px 20px;
   margin-bottom: 24px;
   justify-content: space-around;
@@ -100,12 +100,12 @@
   padding: 6px 14px;
   border-radius: 20px;
   border: 1px solid var(--border);
-  background: var(--surface-2);
+  background: var(--border);
   color: var(--text-muted);
   font-size: 0.8rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all var(--tr);
+  transition: all var(--transition);
 }
 
 .filter-btn.active {
@@ -118,14 +118,14 @@
 .week-card {
   margin-bottom: 12px;
   border: 1px solid var(--border);
-  border-radius: var(--radius);
+  border-radius: var(--radius-md);
   background: var(--surface);
   overflow: hidden;
-  transition: border-color var(--tr);
+  transition: border-color var(--transition);
 }
 
 .week-card.open {
-  border-color: rgba(124, 109, 250, 0.4);
+  border-color: rgba(22, 131, 199, 0.4);
 }
 
 .week-header {
@@ -138,7 +138,7 @@
 }
 
 .week-header:hover {
-  background: var(--surface-2);
+  background: var(--border);
 }
 
 .week-header-left {
@@ -148,7 +148,7 @@
 }
 
 .week-badge {
-  background: rgba(124, 109, 250, 0.12);
+  background: rgba(22, 131, 199, 0.12);
   color: var(--accent);
   padding: 3px 10px;
   border-radius: 6px;
@@ -172,7 +172,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  background: var(--surface-2);
+  background: var(--border);
   padding: 4px 10px;
   border-radius: 20px;
   font-size: 0.7rem;
@@ -183,14 +183,14 @@
 .week-prog-bar {
   width: 60px;
   height: 6px;
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--border-strong);
   border-radius: 3px;
   overflow: hidden;
 }
 
 .week-prog-fill {
   height: 100%;
-  background: var(--accent);
+  background: linear-gradient(90deg, var(--accent), var(--accent-secondary));
   border-radius: 3px;
   transition: width 0.4s ease;
 }
@@ -200,7 +200,7 @@
   border-right: 2px solid var(--text-muted);
   border-bottom: 2px solid var(--text-muted);
   transform: rotate(45deg);
-  transition: transform var(--tr);
+  transition: transform var(--transition);
 }
 
 .week-card.open .chevron {
@@ -231,7 +231,7 @@
   justify-content: space-between;
   margin-bottom: 16px;
   padding-bottom: 8px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid var(--border);
 }
 
 .topic-name-wrap {
@@ -268,12 +268,12 @@
   gap: 10px;
   padding: 8px 12px;
   border-radius: var(--radius-sm);
-  background: var(--surface-2);
-  transition: all var(--tr);
+  background: var(--border);
+  transition: all var(--transition);
 }
 
 .p-row:hover {
-  background: rgba(124, 109, 250, 0.05);
+  background: rgba(22, 131, 199, 0.05);
 }
 
 .p-row.done {
@@ -313,7 +313,7 @@
 }
 
 .p-badge.new { background: rgba(52, 211, 153, 0.1); color: var(--green); }
-.p-badge.revision { background: rgba(124, 109, 250, 0.1); color: var(--accent); }
+.p-badge.revision { background: rgba(22, 131, 199, 0.1); color: var(--accent); }
 .p-badge.custom { background: rgba(251, 191, 36, 0.1); color: var(--yellow); }
 
 .p-actions {
@@ -361,18 +361,18 @@
   padding: 10px;
   border: 1px dashed var(--border);
   border-radius: var(--radius-sm);
-  background: rgba(124, 109, 250, 0.04);
+  background: rgba(22, 131, 199, 0.04);
   color: var(--accent);
   font-size: 0.82rem;
   font-weight: 600;
   cursor: pointer;
   margin-top: 10px;
-  transition: all var(--tr);
+  transition: all var(--transition);
 }
 
 .btn-add-week:hover {
   border-color: var(--accent);
-  background: rgba(124, 109, 250, 0.1);
+  background: rgba(22, 131, 199, 0.1);
 }
 
 .modal-overlay {
@@ -392,7 +392,7 @@
   padding: 28px;
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: var(--radius);
+  border-radius: var(--radius-md);
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
   animation: slideIn 0.3s ease;
 }
@@ -425,9 +425,9 @@
 
 .focus-card {
   flex: 1;
-  background: linear-gradient(135deg, rgba(124, 109, 250, 0.1), rgba(124, 109, 250, 0.02));
-  border: 1px solid rgba(124, 109, 250, 0.2);
-  border-radius: var(--radius);
+  background: linear-gradient(135deg, rgba(22, 131, 199, 0.1), rgba(22, 131, 199, 0.02));
+  border: 1px solid rgba(22, 131, 199, 0.2);
+  border-radius: var(--radius-md);
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -460,14 +460,14 @@
 .focus-bar {
   flex: 1;
   height: 6px;
-  background: var(--surface-2);
+  background: var(--border);
   border-radius: 3px;
   overflow: hidden;
 }
 
 .focus-bar-fill {
   height: 100%;
-  background: var(--accent);
+  background: linear-gradient(90deg, var(--accent), var(--accent-secondary));
   transition: width 0.4s ease;
 }
 
@@ -493,10 +493,10 @@
   font-weight: 600;
 }
 
-.p-badge.Easy { background: rgba(52, 211, 153, 0.1); color: var(--green); }
-.p-badge.Medium { background: rgba(251, 191, 36, 0.1); color: var(--yellow); }
-.p-badge.Hard { background: rgba(239, 68, 68, 0.1); color: var(--red); }
-.p-badge.topic { background: rgba(124, 109, 250, 0.1); color: var(--accent); }
+.p-badge.Easy { background: rgba(22, 163, 74, 0.1); color: var(--green); }
+.p-badge.Medium { background: rgba(217, 119, 6, 0.1); color: var(--yellow); }
+.p-badge.Hard { background: rgba(220, 38, 38, 0.1); color: var(--red); }
+.p-badge.topic { background: var(--accent-soft); color: var(--accent); }
 
 .topic-prog-container {
   display: flex;
@@ -513,14 +513,14 @@
 .topic-prog-bar {
   width: 80px;
   height: 6px;
-  background: var(--surface-2);
+  background: var(--border);
   border-radius: 3px;
   overflow: hidden;
 }
 
 .topic-prog-fill {
   height: 100%;
-  background: var(--accent);
+  background: linear-gradient(90deg, var(--accent), var(--accent-secondary));
   border-radius: 3px;
   transition: width 0.4s ease;
 }

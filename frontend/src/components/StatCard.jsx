@@ -1,11 +1,12 @@
 /**
- * StatCard — headline number card for the dashboard.
+ * StatCard — metric item for the dashboard strip.
  *
  * Props:
- *   icon     : string (emoji)
+ *   icon     : ReactNode
  *   value    : string | number
  *   label    : string
  *   accent   : "default" | "green" | "yellow" | "red"
+ *   isLast   : boolean
  */
 const COLOR_MAP = {
   default: "var(--accent)",
@@ -14,16 +15,28 @@ const COLOR_MAP = {
   red:     "var(--red)",
 };
 
-export default function StatCard({ icon, value, label, accent = "default" }) {
+export default function StatCard({ icon, value, label, accent = "default", isLast }) {
   return (
-    <div className="card animate-up" style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-      <span style={{ fontSize: "1.4rem", lineHeight: 1 }}>{icon}</span>
-      <span style={{ fontSize: "2rem", fontWeight: 800, lineHeight: 1, color: COLOR_MAP[accent] }}>
-        {value ?? "—"}
-      </span>
-      <span style={{ fontSize: ".72rem", textTransform: "uppercase", letterSpacing: ".06em", color: "var(--text-muted)", fontWeight: 500 }}>
-        {label}
-      </span>
+    <div className="animate-up" style={{ 
+      display: "flex", 
+      alignItems: "center", 
+      gap: "var(--space-3)", 
+      padding: "var(--space-4) var(--space-6)", 
+      borderRight: isLast ? "none" : "1px solid var(--border)", 
+      flex: 1, 
+      minWidth: "180px" 
+    }}>
+      <div style={{ color: COLOR_MAP[accent], display: "flex", alignItems: "center", justifyContent: "center" }}>
+        {icon}
+      </div>
+      <div>
+        <div style={{ fontSize: "24px", fontWeight: 600, lineHeight: 1.1, color: "var(--text)" }}>
+          {value ?? "—"}
+        </div>
+        <div style={{ fontSize: "13px", color: "var(--text-muted)", fontWeight: 500, marginTop: "4px" }}>
+          {label}
+        </div>
+      </div>
     </div>
   );
 }

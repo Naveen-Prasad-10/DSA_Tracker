@@ -46,14 +46,21 @@ def problems_over_time():
     # Build a lookup: date_string → count
     solve_map = {row["date_solved"]: row["count"] for row in rows}
 
-    # Fill every day in the last 30 days (oldest → newest for chart ordering)
     today = date.today()
+    if not rows:
+        return jsonify([])
+
+    first_date = date.fromisoformat(rows[0]["date_solved"])
+    days_since_first = (today - first_date).days
+    # Enforce a minimum 2-day offset (so the graph always has at least 3 points and draws a line)
+    start_offset = max(2, min(29, days_since_first))
+
     result = [
         {
             "date":  (today - timedelta(days=i)).isoformat(),
             "count": solve_map.get((today - timedelta(days=i)).isoformat(), 0),
         }
-        for i in range(29, -1, -1)  # 29 days ago → today
+        for i in range(start_offset, -1, -1)
     ]
     return jsonify(result)
 
