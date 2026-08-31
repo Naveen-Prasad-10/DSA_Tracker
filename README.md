@@ -1,53 +1,70 @@
-# 🧠 Code Review Tracker — Spaced Repetition
+# 🧠 DSA Revision Tracker — Spaced Repetition
 
-A lightweight, full-stack web app to track and revise coding problems using **spaced repetition** scheduling. Built with Python (Flask), SQLite, and vanilla HTML/CSS/JS.
+A full-stack web application designed to track and revise coding problems using **spaced repetition** scheduling. The application features a clean, professional React (Vite) frontend with a Python (Flask) REST API and SQLite database.
 
 ---
 
-## 📁 File Structure
+## 📁 Project Structure
 
-```
+```text
 coding-tracker/
-├── app.py           # Flask entry point — initializes app & DB
-├── models.py        # SQLite schema & connection helper
-├── routes.py        # REST API endpoints (Blueprint)
-├── utils.py         # Scheduling logic (confidence → next review date)
-├── scheduler.py     # Phase 2: daily email reminder script
-├── requirements.txt # Python dependencies (Flask only)
-├── tracker.db       # Auto-generated SQLite database
-└── static/
-    ├── index.html   # Single-page frontend
-    ├── style.css    # Dark-mode styling
-    └── app.js       # API calls, form logic, modal, rendering
+├── app.py              # Flask entry point — initializes app & serves API
+├── models.py           # SQLite schema (users, problems, friendships) & DB helpers
+├── auth.py             # User authentication routes (login, register, logout)
+├── routes.py           # Core REST API endpoints for problems
+├── analytics.py        # Dashboard analytics (streaks, weak topics, over-time graphs)
+├── roadmap.py          # 4-Week Interview Curriculum generation & tracking
+├── social.py           # Friend system, leaderboards, and activity feeds
+├── utils.py            # Scheduling logic (confidence → next review date)
+├── scheduler.py        # Standalone script for daily email reminders
+├── requirements.txt    # Python dependencies
+├── tracker.db          # Auto-generated SQLite database
+└── frontend/           # React 18 Single Page Application (Vite)
+    ├── package.json
+    ├── vite.config.js
+    └── src/
+        ├── components/ # Reusable UI components (Navbar, ProblemCard, etc.)
+        ├── pages/      # Route pages (Dashboard, Roadmap, Friends, etc.)
+        ├── services/   # Axios API integrations
+        ├── context/    # React Context (Auth)
+        └── index.css   # Global design tokens (Pastel blue theme)
 ```
 
 ---
 
 ## 🚀 How to Run Locally
 
-### 1. Create a virtual environment (recommended)
+### 1. Start the Flask Backend
+Open a terminal in the root directory:
 ```bash
+# Create a virtual environment
 python -m venv venv
 
-# Windows
+# Activate it (Windows)
 venv\Scripts\activate
-
-# macOS / Linux
+# Activate it (macOS / Linux)
 source venv/bin/activate
-```
 
-### 2. Install dependencies
-```bash
+# Install dependencies
 pip install -r requirements.txt
-```
 
-### 3. Start the server
-```bash
+# Start the Flask server
 python app.py
 ```
+*The backend runs on `http://127.0.0.1:5000`.*
 
-### 4. Open the app
-Navigate to **http://127.0.0.1:5000** in your browser.
+### 2. Start the React Frontend
+Open a **new terminal** and navigate to the `frontend` folder:
+```bash
+cd frontend
+
+# Install Node dependencies
+npm install
+
+# Start the Vite development server
+npm run dev
+```
+*The frontend runs on `http://localhost:5173`. Vite will automatically proxy API requests to Flask.*
 
 ---
 
@@ -63,80 +80,43 @@ When you add or revise a problem, you rate your confidence from **1 to 5**. The 
 | 4          | Got it, slow     | 7 days      |
 | 5          | Nailed it!       | 14 days     |
 
-This logic lives in **`utils.py → calculate_next_review(confidence)`** and is called by both the add and update routes.
+This logic lives in **`utils.py → calculate_next_review(confidence)`**.
 
 ---
 
-## 🔌 REST API
+## 🔌 Core Features
 
-| Method | Endpoint              | Description                          |
-|:------:|:----------------------|:-------------------------------------|
-| POST   | `/problems`           | Add a new problem                    |
-| GET    | `/problems`           | Get all problems                     |
-| GET    | `/problems/today`     | Get problems due today (or overdue)  |
-| GET    | `/problems/upcoming`  | Get future scheduled problems        |
-| PUT    | `/problems/<id>`      | Update confidence & reschedule       |
-
-### POST `/problems` — example body
-```json
-{
-  "title":       "Two Sum",
-  "topic":       "Arrays, HashMap",
-  "difficulty":  "Easy",
-  "date_solved": "2024-01-15",
-  "confidence":  3
-}
-```
-
----
-
-## 📧 Phase 2 — Email Reminders
-
-`scheduler.py` fetches today's due problems and sends a summary email via SMTP.
-
-### Setup
-Set environment variables before running:
-```bash
-# Windows (PowerShell)
-$env:EMAIL_SENDER   = "you@gmail.com"
-$env:EMAIL_PASSWORD = "your_app_password"
-$env:EMAIL_RECIPIENT = "you@gmail.com"
-
-python scheduler.py
-```
-
-> **Gmail tip:** Use an [App Password](https://support.google.com/accounts/answer/185833) instead of your real password.
-
-### Automate it
-- **Windows:** Use *Task Scheduler* to run `python scheduler.py` daily.
-- **Linux/macOS:** Add a cron job: `0 9 * * * python /path/to/scheduler.py`
-
----
-
-## 🧩 Component Overview
-
-| File | Role |
-|:-----|:-----|
-| `app.py` | Bootstraps Flask, registers routes, serves frontend |
-| `models.py` | Defines the `problems` table schema, provides `get_db()` |
-| `routes.py` | Implements all REST endpoints, validates inputs |
-| `utils.py` | Pure-function scheduling logic (`calculate_next_review`) |
-| `scheduler.py` | Standalone script for daily email reminders |
-| `static/app.js` | Fetches API data, handles form submit, renders cards, modal |
-| `static/style.css` | Dark-themed, responsive UI |
+*   **Spaced Repetition Tracker:** Log problems and automatically schedule them for future review based on your confidence score.
+*   **Analytics Dashboard:** Visualizes your study streak, identifies weak topics, and charts problems solved over time.
+*   **4-Week Curriculum Roadmap:** A structured interview preparation plan divided by topic with progress tracking.
+*   **Social & Friends:** Add friends via a unique code, view leaderboards, and track your friends' recent activity.
+*   **Authentication:** Secure user accounts with session-based authentication to keep your data private.
 
 ---
 
 ## 🗃️ Database Schema
 
-```sql
-CREATE TABLE problems (
-    id          INTEGER PRIMARY KEY AUTOINCREMENT,
-    title       TEXT    NOT NULL,
-    topic       TEXT    NOT NULL,
-    difficulty  TEXT    NOT NULL CHECK(difficulty IN ('Easy','Medium','Hard')),
-    date_solved TEXT    NOT NULL,
-    confidence  INTEGER NOT NULL CHECK(confidence BETWEEN 1 AND 5),
-    next_review TEXT    NOT NULL
-);
+The database uses SQLite with the following primary tables:
+
+1. **`users`**: Manages authentication (`id`, `username`, `password_hash`, `friend_code`).
+2. **`problems`**: Stores user-specific problems (`id`, `user_id`, `title`, `topic`, `difficulty`, `date_solved`, `confidence`, `next_review`, `is_done`).
+3. **`friendships`**: Tracks connections between users (`user_id_1`, `user_id_2`).
+
+---
+
+## 📧 Email Reminders (Optional)
+
+`scheduler.py` fetches today's due problems and sends a summary email via SMTP.
+
+**Setup Environment Variables:**
+```bash
+# Windows (PowerShell)
+$env:EMAIL_SENDER   = "you@gmail.com"
+$env:EMAIL_PASSWORD = "your_app_password"
+$env:EMAIL_RECIPIENT = "you@gmail.com"
+```
+
+Run the script daily via Task Scheduler (Windows) or Cron (Linux/macOS):
+```bash
+python scheduler.py
 ```
