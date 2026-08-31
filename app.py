@@ -3,7 +3,7 @@ app.py - Entry point for the Spaced Repetition Coding Tracker Flask app.
 Initializes the app, database, and registers all blueprints.
 """
 
-from flask import Flask
+from flask import Flask, send_from_directory
 from models import init_db
 from routes import problems_bp
 from analytics import analytics_bp
@@ -32,11 +32,16 @@ def not_found(e):
 
 @app.route("/", defaults={"path": ""})
 @app.route("/<path:path>")
-def serve_react(path):
-    """Main entry point for the React application."""
-    # If the path points to an actual file in 'dist', Flask serves it automatically
-    # due to static_url_path='/'. This route handles the rest (client-side routing).
-    return app.send_static_file("index.html")
+def serve(path):
+    if path != "" and os.path.exists(app.static_folder + '/' + path):
+        return send_from_directory(app.static_folder, path)
+    else:
+        # Prevent browser from caching index.html so updates happen immediately
+        response = send_from_directory(app.static_folder, 'index.html')
+        response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+        response.headers['Pragma'] = 'no-cache'
+        response.headers['Expires'] = '0'
+        return response
 
 
 if __name__ == "__main__":
