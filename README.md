@@ -94,6 +94,15 @@ This logic lives in **`utils.py → calculate_next_review(confidence)`**.
 
 ---
 
+![Dashboard View](docs/Screenshot%202026-08-31%20173809.png)
+
+![Roadmap View](docs/Screenshot%202026-08-31%20173822.png)
+
+![Problems List](docs/Screenshot%202026-08-31%20173837.png)
+
+![Analytics View](docs/Screenshot%202026-08-31%20173854.png)
+
+
 ## Database Schema
 
 The database uses SQLite with the following primary tables:
